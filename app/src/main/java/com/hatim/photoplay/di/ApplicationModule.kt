@@ -14,14 +14,4 @@ import dagger.hilt.components.SingletonComponent
 class ApplicationModule {
     @Provides
     fun provideGlide(@ApplicationContext context: Context) = Glide.with(context)
-
-    @Provides
-    fun provideSessionSharedPreferences(@ApplicationContext context: Context) =
-        context.getSharedPreferences(
-            SESSION, MODE_PRIVATE
-        )
-
-    companion object {
-        const val SESSION = "SESSION"
-    }
 }

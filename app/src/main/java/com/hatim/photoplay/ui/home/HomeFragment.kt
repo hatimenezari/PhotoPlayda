@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.hatim.photoplay.R
 
 class HomeFragment : Fragment() {
@@ -19,11 +20,18 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        return inflater.inflate(R.layout.fragment_home, container, false)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        homeViewModel.getDocuments()
+        homeViewModel.documents.observe(viewLifecycleOwner){
+            val documents = view.findViewById<RecyclerView>(R.id.documents)
+            documents.adapter = DocumentsAdapter(
+                it
+            )
         }
-        return root
     }
 }
